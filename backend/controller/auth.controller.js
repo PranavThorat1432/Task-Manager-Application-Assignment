@@ -142,8 +142,8 @@ export const signin = async (req, res, next) => {
       .status(200)
       .cookie("access_token", token, {
         httpOnly: true,
-        secure: isProduction,
-        sameSite: isProduction ? "strict" : "lax",
+        secure: true, // Always secure for cross-domain
+        sameSite: isProduction ? "none" : "lax", // 'none' for cross-domain
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       })
       .json(rest)
@@ -267,8 +267,8 @@ export const signout = async (req, res, next) => {
     res
       .clearCookie("access_token", {
         httpOnly: true,
-        secure: isProduction,
-        sameSite: isProduction ? "strict" : "lax",
+        secure: true,
+        sameSite: process.env.NODE_ENV ? "none" : "lax",
       })
       .status(200)
       .json("User has been loggedout successfully!")
