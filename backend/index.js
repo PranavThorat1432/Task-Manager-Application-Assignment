@@ -55,6 +55,10 @@ app.use(express.json())
 
 app.use(cookieParser())
 
+app.get('/', (req, res) => {
+  res.send('Server is Running!');
+});
+
 app.listen(PORT, () => {
   console.log(`Server is running on port: 'https://localhost:${PORT}'`);
 })
